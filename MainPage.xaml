@@ -2,51 +2,8 @@ namespace YomaGamingPanel;
 
 public partial class MainPage : ContentPage
 {
-    private bool _drillRunning;
-
     public MainPage()
     {
         InitializeComponent();
-    }
-
-    private async void OnPracticeClicked(object sender, EventArgs e)
-    {
-        if (_drillRunning)
-            return;
-
-        _drillRunning = true;
-        PracticeButton.IsEnabled = false;
-
-        for (int remaining = 10; remaining >= 1; remaining--)
-        {
-            PracticeStatus.Text = $"Practice drill: {remaining}s";
-            await Task.Delay(1000);
-        }
-
-        PracticeStatus.Text = "Drill complete — take a short break.";
-        PracticeButton.Text = "START AGAIN";
-        PracticeButton.IsEnabled = true;
-        _drillRunning = false;
-    }
-
-    private void OnSaveClicked(object sender, EventArgs e)
-    {
-        SaveStatus.Text = "YOMA Gaming Panel is ready!";
-    }
-
-    private async void OnM1887Clicked(object sender, EventArgs e)
-    {
-        await DisplayAlert(
-            "M1887 Practice",
-            "Practice your aim in the Training Ground.",
-            "OK");
-    }
-
-    private async void OnMP40Clicked(object sender, EventArgs e)
-    {
-        await DisplayAlert(
-            "MP40 Practice",
-            "Practice short bursts in the Training Ground.",
-            "OK");
     }
 }
