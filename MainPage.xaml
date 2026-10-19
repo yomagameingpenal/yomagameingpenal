@@ -1,33 +1,52 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="YomaGamingPanel.MainPage"
-    BackgroundColor="#0B0714">
+namespace YomaGamingPanel;
 
-    <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        Spacing="15">
+public partial class MainPage : ContentPage
+{
+    private bool _drillRunning;
 
-        <Label
-            Text="YOMA"
-            FontSize="32"
-            FontAttributes="Bold"
-            TextColor="#D9B4FF"
-            HorizontalOptions="Center" />
+    public MainPage()
+    {
+        InitializeComponent();
+    }
 
-        <Label
-            Text="GAMING PANEL"
-            FontSize="20"
-            TextColor="White"
-            HorizontalOptions="Center" />
+    private async void OnPracticeClicked(object sender, EventArgs e)
+    {
+        if (_drillRunning)
+            return;
 
-        <Label
-            Text="App is working!"
-            FontSize="16"
-            TextColor="#A879FF"
-            HorizontalOptions="Center" />
+        _drillRunning = true;
+        PracticeButton.IsEnabled = false;
 
-    </VerticalStackLayout>
-</ContentPage>
+        for (int remaining = 10; remaining >= 1; remaining--)
+        {
+            PracticeStatus.Text = $"Practice drill: {remaining}s";
+            await Task.Delay(1000);
+        }
+
+        PracticeStatus.Text = "Drill complete — take a short break.";
+        PracticeButton.Text = "START AGAIN";
+        PracticeButton.IsEnabled = true;
+        _drillRunning = false;
+    }
+
+    private void OnSaveClicked(object sender, EventArgs e)
+    {
+        SaveStatus.Text = "YOMA Gaming Panel is ready!";
+    }
+
+    private async void OnM1887Clicked(object sender, EventArgs e)
+    {
+        await DisplayAlert(
+            "M1887 Practice",
+            "Practice your aim in the Training Ground.",
+            "OK");
+    }
+
+    private async void OnMP40Clicked(object sender, EventArgs e)
+    {
+        await DisplayAlert(
+            "MP40 Practice",
+            "Practice short bursts in the Training Ground.",
+            "OK");
+    }
+}
